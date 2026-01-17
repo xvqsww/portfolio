@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XV | Systems Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #030303; --red: #ff0000; --glass: rgba(255, 255, 255, 0.05); }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        
+        .back-btn { position: fixed; top: 20px; left: 20px; color: var(--red); text-decoration: none; font-weight: bold; z-index: 100; border: 1px solid var(--red); padding: 10px 20px; background: rgba(0,0,0,0.8); transition: 0.3s; letter-spacing: 2px; }
+        .back-btn:hover { background: var(--red); color: black; }
+
+        .container { position: relative; z-index: 10; padding: 80px 10%; text-align: center; }
+        h1 { font-family: 'UnifrakturMaguntia', serif; color: var(--red); font-size: 4rem; margin-bottom: 10px; text-shadow: 0 0 20px rgba(255,0,0,0.4); }
+        p.subtitle { color: #666; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 50px; font-size: 0.8rem; }
+
+        .gallery-grid { display: flex; flex-direction: column; gap: 40px; align-items: center; }
+        
+        .gallery-item-flex { 
+            display: flex; 
+            background: var(--glass); 
+            border: 1px solid rgba(255, 0, 0, 0.2); 
+            width: 100%; 
+            max-width: 900px; 
+            backdrop-filter: blur(15px); 
+            transition: 0.4s;
+            overflow: hidden;
+            text-align: left;
+            min-height: 220px;
+        }
+
+        .gallery-item-flex:hover { border-color: var(--red); box-shadow: 0 0 30px rgba(255, 0, 0, 0.15); }
+
+        .item-image { flex: 0 0 45%; border-right: 1px solid rgba(255, 0, 0, 0.1); overflow: hidden; background: #000; position: relative; }
+        .item-image img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.0); filter: grayscale(20%); transition: 0.5s ease; }
+        .gallery-item-flex:hover img { filter: grayscale(0%); transform: scale(1.05); }
+
+        .item-details { flex: 1; padding: 30px; display: flex; flex-direction: column; justify-content: center; }
+        .item-details h3 { font-family: 'UnifrakturMaguntia', serif; color: var(--red); font-size: 2rem; margin: 0 0 10px 0; }
+        .item-details .desc { color: #ccc; line-height: 1.5; font-size: 0.9rem; margin-bottom: 15px; }
+
+        .price-row { display: flex; align-items: center; gap: 15px; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; }
+        .price-usd { color: #00ff00; }
+        .price-sep { font-size: 0.7rem; color: #555; letter-spacing: 1px; }
+        .price-robux { display: flex; align-items: center; gap: 8px; color: #ffaa00; }
+        .robux-icon { width: 22px; height: 22px; }
+
+        .buy-btn { text-decoration: none; color: white; border: 1px solid var(--red); padding: 10px 20px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; width: fit-content; }
+        .buy-btn:hover { background: var(--red); color: black; }
+
+        .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; filter: blur(0.8px); }
+        .drop { position: absolute; background: linear-gradient(to bottom, transparent, var(--red)); width: 1px; height: 60px; opacity: 0.3; }
+
+        @media (max-width: 768px) {
+            .gallery-item-flex { flex-direction: column; }
+            .item-image { flex: 0 0 200px; border-right: none; border-bottom: 1px solid rgba(255, 0, 0, 0.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="rain-container"></div>
+    <a href="index.html" class="back-btn">← EXIT</a>
+
+    <div class="container">
+        <h1>Advanced Systems</h1>
+        <p class="subtitle">Custom Mechanics & Frameworks</p>
+
+        <div class="gallery-grid">
+            <div class="gallery-item-flex">
+                <div class="item-image"><img src="hostage.png"></div>
+                <div class="item-details">
+                    <h3>Hostage System</h3>
+                    <p class="desc">Optimized interaction system with synchronized player movements and smooth animations.</p>
+                    <div class="price-row">
+                        <span class="price-usd">$20</span>
+                        <span class="price-sep">OR</span>
+                        <span class="price-robux"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg" class="robux-icon"> 2,000</span>
+                    </div>
+                    <a href="https://discord.gg/WaR3h4JqYm" target="_blank" class="buy-btn">Purchase Now</a>
+                </div>
+            </div>
+
+            <div class="gallery-item-flex">
+                <div class="item-image"><img src="overhead.png"></div>
+                <div class="item-details">
+                    <h3>Overhead UI System</h3>
+                    <p class="desc">Sleek, customizable overhead displays for player names, ranks, and group affiliations. Optimized to prevent lag in large servers.</p>
+                    <div class="price-row">
+                        <span class="price-usd">$15</span>
+                        <span class="price-sep">OR</span>
+                        <span class="price-robux"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg" class="robux-icon"> 1,500</span>
+                    </div>
+                    <a href="https://discord.gg/WaR3h4JqYm" target="_blank" class="buy-btn">Purchase Now</a>
+                </div>
+            </div>
+
+            <div class="gallery-item-flex">
+                <div class="item-image"><img src="admin.png"></div>
+                <div class="item-details">
+                    <h3>Admin Panel</h3>
+                    <p class="desc">Real-time player management suite with secure moderation logs and customizable staff permissions.</p>
+                    <div class="price-row">
+                        <span class="price-usd">$10</span>
+                        <span class="price-sep">OR</span>
+                        <span class="price-robux"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg" class="robux-icon"> 1,000</span>
+                    </div>
+                    <a href="https://discord.gg/WaR3h4JqYm" target="_blank" class="buy-btn">Purchase Now</a>
+                </div>
+            </div>
+
+            <div class="gallery-item-flex">
+                <div class="item-image"><img src="stamina.png"></div>
+                <div class="item-details">
+                    <h3>Stamina System</h3>
+                    <p class="desc">Dynamic exertion system with custom recovery framework and integrated UI indicators.</p>
+                    <div class="price-row">
+                        <span class="price-usd">$5</span>
+                        <span class="price-sep">OR</span>
+                        <span class="price-robux"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg" class="robux-icon"> 500</span>
+                    </div>
+                    <a href="https://discord.gg/WaR3h4JqYm" target="_blank" class="buy-btn">Purchase Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.querySelector('.rain-container');
+        function createRain() {
+            const drop = document.createElement('div');
+            const posX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 0.5 + 0.5;
+            drop.style.left = posX + 'px';
+            drop.style.animation = `fall ${duration}s linear forwards`;
+            drop.classList.add('drop');
+            container.appendChild(drop);
+            setTimeout(() => { drop.remove(); }, duration * 1000);
+        }
+        setInterval(createRain, 30);
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `@keyframes fall { to { transform: translateY(100vh); } }`;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

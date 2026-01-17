@@ -1,0 +1,139 @@
+/* Service Selection */
+.services-section { padding: 80px 10%; background: #050505; }
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.service-card {
+    background: #111;
+    border: 1px solid #333;
+    padding: 40px 20px;
+    text-align: center;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.service-card:hover {
+    border-color: var(--accent-color);
+    background: #1a0000;
+    transform: scale(1.05);
+}
+
+.service-card .icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+
+/* Reputation & Archive */
+.platform-features {
+    display: flex;
+    gap: 30px;
+    padding: 80px 10%;
+}
+
+.rep-container { display: flex; gap: 20px; flex: 1; }
+
+.rep-box {
+    background: #111;
+    padding: 30px;
+    flex: 1;
+    text-align: center;
+    border-bottom: 3px solid #333;
+}
+
+.rep-box.border-red { border-bottom: 3px solid var(--accent-color); }
+
+.score {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    font-family: 'UnifrakturMaguntia', serif;
+}
+
+.score span { font-size: 1rem; color: #555; }
+
+/* Proof Archive */
+.archive-section { flex: 1; }
+
+.archive-list { background: #0a0a0a; border: 1px solid #222; }
+
+.archive-item {
+    padding: 15px;
+    border-bottom: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.archive-item span { color: #00ff00; font-size: 0.7rem; text-transform: uppercase; }
+
+/* Review Style */
+.review-card {
+    background: linear-gradient(90deg, #111, #000);
+    padding: 20px;
+    border-left: 2px solid var(--accent-color);
+    margin: 10px 10%;
+}
+
+/* Background Atmosphere */
+body {
+    background: linear-gradient(to bottom, #000000, #0a0a0a);
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+/* Blur effect for the background */
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(1px); /* Makes rain look softer/realistic */
+}
+
+/* The Rain Drop */
+.drop {
+    position: absolute;
+    background: rgba(255, 0, 0, 0.4); /* Subtle red tint to match XV */
+    width: 1px;
+    height: 80px;
+    top: -100px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* The Ground where splashes happen */
+.ground {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 10vh;
+    background: transparent;
+    z-index: -1;
+}
+
+/* Splash Effect (Z rozpryskiem) */
+.splash {
+    position: absolute;
+    bottom: 0;
+    width: 4px;
+    height: 2px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    transform: scale(0);
+    animation: splash 0.4s ease-out;
+}
+
+@keyframes splash {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(4); opacity: 0; }
+}
