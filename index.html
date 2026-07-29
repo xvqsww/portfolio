@@ -3,152 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XV | Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #030303;
-            --accent-red: #ff0000;
-            --text-white: #ffffff;
-            --text-dim: #666;
-            --glass: rgba(255, 255, 255, 0.03);
-            --card-round: 24px;
-        }
-
-        body, html {
-            margin: 0; padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-white);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-
-        #lightning-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .storm-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, transparent, rgba(0,0,0,0.9));
-            z-index: 3; pointer-events: none;
-            transition: background 0.1s;
-        }
-
-        .strike-active {
-            background: radial-gradient(circle at 50% 50%, rgba(255,0,0,0.05), rgba(0,0,0,0.9));
-        }
-
-        .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; filter: blur(0.8px); }
-        .drop { position: absolute; background: linear-gradient(to bottom, transparent, var(--accent-red)); width: 1px; height: 80px; opacity: 0.5; }
-        .ground { position: fixed; bottom: 0; width: 100%; height: 50px; z-index: 2; pointer-events: none; }
-        .splash { position: absolute; bottom: 0; width: 2px; height: 2px; border-radius: 50%; border: 1px solid var(--accent-red); opacity: 0.6; animation: splashAnim 0.4s ease-out forwards; }
-        @keyframes splashAnim { 0% { transform: scale(0); opacity: 0.8; } 100% { transform: scale(8); opacity: 0; } }
-        
-        .content-wrapper { position: relative; z-index: 10; padding: 2rem 10% 5rem 10%; }
-        .logo { font-family: 'UnifrakturMaguntia', serif; font-size: 8rem; color: var(--accent-red); text-align: center; margin: 40px 0; transition: 0.2s; text-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
-        .logo-flash { text-shadow: 0 0 40px var(--accent-red), 0 0 80px var(--accent-red) !important; color: #fff !important; }
-        
-        h2 { text-transform: uppercase; letter-spacing: 4px; border-left: 3px solid var(--accent-red); padding-left: 15px; margin-top: 60px; margin-bottom: 30px; font-size: 1.2rem; }
-        .about-text { color: #ccc; line-height: 1.8; max-width: 800px; margin: 20px 0; font-size: 1.1rem; letter-spacing: 0.5px; }
-        .highlight { color: var(--accent-red); font-weight: bold; }
-
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin-top: 20px; }
-        .service-link { text-decoration: none; color: inherit; }
-        .service-card { 
-            position: relative; background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.08); 
-            padding: 40px 20px; text-align: center; border-radius: var(--card-round); 
-            backdrop-filter: blur(15px); transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer; overflow: hidden;
-        }
-        .service-card:hover { border-color: rgba(255, 0, 0, 0.5); background: rgba(255, 255, 255, 0.06); transform: translateY(-10px); }
-        .service-card .icon { font-size: 2.8rem; margin-bottom: 15px; display: block; transition: 0.4s; }
-        .service-card:hover .icon { transform: scale(1.2); filter: drop-shadow(0 0 15px var(--accent-red)); }
-        .service-card span.label { text-transform: uppercase; letter-spacing: 4px; font-weight: 700; font-size: 0.85rem; color: #aaa; transition: 0.3s; }
-
-        .rep-box { flex: 1; background: rgba(255,255,255,0.02); padding: 25px; border-radius: var(--card-round); border: 1px solid rgba(255,255,255,0.05); margin: 10px 0; backdrop-filter: blur(5px); }
-        .score { font-size: 2.5rem; font-weight: bold; color: var(--accent-red); margin-top: 5px; }
-        .proof-container { background: rgba(0,0,0,0.4); border: 1px solid #222; padding: 5px; border-radius: 15px; overflow: hidden; }
-        .proof-item { display: flex; justify-content: space-between; padding: 15px 25px; border-bottom: 1px solid #111; }
-
-        footer { text-align: center; padding: 60px 40px; color: var(--text-dim); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; border-top: 1px solid #111; margin-top: 100px; }
-        footer b { color: var(--accent-red); font-family: 'UnifrakturMaguntia', serif; font-size: 1.2rem; }
-
-        .discord-wrapper { position: fixed; bottom: 30px; right: 30px; display: flex; align-items: center; gap: 15px; z-index: 1000; }
-        .discord-float { width: 60px; height: 60px; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 50%; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(15px); transition: 0.4s; padding: 14px; }
-        .discord-float svg { fill: var(--text-white); width: 100%; transition: 0.4s; }
-        .discord-wrapper:hover .discord-float { border-color: var(--accent-red); box-shadow: 0 0 30px rgba(255, 0, 0, 0.4); transform: scale(1.1); }
-    </style>
+    <title>XVQ | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <canvas id="lightning-canvas"></canvas>
-    <div class="storm-overlay" id="overlay"></div>
-    
-    <div class="rain-container"></div>
-    <div class="ground"></div>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="cyber-overlay"></div>
 
     <div class="discord-wrapper">
-        <a href="https://discord.gg/WaR3h4JqYm" target="_blank" class="discord-float">
+        <a href="https://discord.gg/WaR3h4JqYm" target="_blank" class="discord-float" aria-label="Join Discord">
             <svg viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.06,72.06,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14h0C130.46,50.45,121.37,26.85,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5.09-12.73,11.41-12.73S54.08,46,53.92,53,48.75,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.09-12.73,11.44-12.73S96.08,46,95.92,53,90.77,65.69,84.69,65.69Z"/></svg>
         </a>
     </div>
 
     <div class="content-wrapper">
-        <div class="logo" id="logo">YNGXVQ</div>
-        
-        <h2>About Me</h2>
-        <p class="about-text">
-            I am a <span class="highlight">Roblox Developer with 5 years of experience</span>.
-            I create good quality <span class="highlight">GFX (gotta wait few days for it)</span>, minor <span class="highlight">Building</span>, advanced <span class="highlight">Scripting (studying computer science) </span>, and custom <span class="highlight">Website Creation</span>.
-        </p>
+        <header>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                FOR HIRE
+            </div>
+        </header>
 
-        <h2>Select a Service</h2>
-        <div class="service-grid">
-            <a href="map.html" class="service-link">
-                <div class="service-card"><span class="icon">🗺️</span><span class="label">Maps</span></div>
-            </a>
-            <a href="system.html" class="service-link">
-                <div class="service-card"><span class="icon">⚙️</span><span class="label">Systems</span></div>
-            </a>
-            <a href="ui.html" class="service-link">
-                <div class="service-card"><span class="icon">📱</span><span class="label">UI Designs</span></div>
-            </a>
-            <a href="game.html" class="service-link">
-                <div class="service-card"><span class="icon">🎮</span><span class="label">Full Games</span></div>
-            </a>
-        </div>
+        <main class="hero-section">
+            <div class="logo" id="logo">YNGXVQ</div>
+            <p class="hero-subtitle">
+                <b>Roblox Developer</b> & Computer Science student with <b>5 years of experience</b>, engineering systems, custom websites , realistic/low poly map, and good but slow GFX maker.
+            </p>
+            <div class="cta-group">
+                <a href="https://discord.gg/WaR3h4JqYm" target="_blank" class="btn-primary">Contact Me!</a>
+            </div>
+        </main>
 
-        <div style="display:flex; gap:20px; flex-wrap: wrap; margin-top: 40px;">
-            <div class="rep-box">Developer Rep <div class="score">98/100</div></div>
-            <div class="rep-box">Client Rep <div class="score">94/100</div></div>
-        </div>
+        <section>
+            <div class="section-header">
+                <h2>Modules</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="service-grid">
+                <a href="map.html" class="service-link">
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">🗺️</div>
+                        <h3>Maps</h3>
+                        <p> realistic, low poly, detailed maps.</p>
+                    </div>
+                </a>
+                <a href="system.html" class="service-link">
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">⚙️</div>
+                        <h3>Systems</h3>
+                        <p>High-efficiency, Luau systems.</p>
+                    </div>
+                </a>
+                <a href="ui.html" class="service-link">
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">📱</div>
+                        <h3>UI's</h3>
+                        <p>Just UI's lol.</p>
+                    </div>
+                </a>
+                <a href="game.html" class="service-link">
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">🎮</div>
+                        <h3>Full Games</h3>
+                        <p>Full games just to download and publsih.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
 
-        <footer>Website made by: <b>xvqsw</b></footer>
+        <section>
+            <div class="section-header">
+                <h2>Diagnostics</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-info">
+                        <span>Efficiency Ratio</span>
+                        <h4>Dev Rating</h4>
+                    </div>
+                    <div class="metric-score">98</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-info">
+                        <span>Approval Metric</span>
+                        <h4>Client Rating</h4>
+                    </div>
+                    <div class="metric-score">94</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            Engineered by <b>xvqsw</b>
+        </footer>
     </div>
 
     <script>
-        const rainContainer = document.querySelector('.rain-container');
-        function createRain() {
-            const drop = document.createElement('div');
-            const posX = Math.random() * window.innerWidth;
-            const duration = Math.random() * 0.3 + 0.3;
-            drop.classList.add('drop');
-            drop.style.left = posX + 'px';
-            drop.style.animation = `fall ${duration}s linear forwards`;
-            rainContainer.appendChild(drop);
-            setTimeout(() => drop.remove(), duration * 1000);
-        }
-        setInterval(createRain, 20);
-
-        const canvas = document.getElementById('lightning-canvas');
+        const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
-        const overlay = document.getElementById('overlay');
-        const logo = document.getElementById('logo');
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -157,53 +112,32 @@
         window.addEventListener('resize', resize);
         resize();
 
-        function createLightning() {
-            const x = Math.random() * canvas.width;
-            const y = 0;
-            const segments = 15;
-            const boltColor = "rgba(255, 255, 255, 0.8)";
-            const glowColor = "rgba(255, 0, 0, 0.5)";
-
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = "red";
-            ctx.strokeStyle = boltColor;
-            ctx.lineWidth = 2;
-
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-
-            let curX = x;
-            let curY = y;
-
-            for (let i = 0; i < segments; i++) {
-                curX += (Math.random() - 0.5) * 100;
-                curY += (canvas.height / segments);
-                ctx.lineTo(curX, curY);
-            }
-            ctx.stroke();
-
-            overlay.classList.add('strike-active');
-            logo.classList.add('logo-flash');
-
-            setTimeout(() => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                overlay.classList.remove('strike-active');
-                logo.classList.remove('logo-flash');
-            }, 100);
+        const letters = '01XYZABCDEF';
+        const fontSize = 14;
+        let columns = canvas.width / fontSize;
+        let drops = [];
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
         }
 
-        function lightningLoop() {
-            if (Math.random() > 0.94) {
-                createLightning();
-                if (Math.random() > 0.3) setTimeout(createLightning, 150);
-            }
-            setTimeout(lightningLoop, Math.random() * 2000 + 500);
-        }
-        lightningLoop();
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(7, 9, 15, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        const styleSheet = document.createElement("style");
-        styleSheet.innerText = `@keyframes fall { to { transform: translateY(100vh); } }`;
-        document.head.appendChild(styleSheet);
+            ctx.fillStyle = '#00ffcc';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 35);
     </script>
 </body>
 </html>
